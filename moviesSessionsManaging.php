@@ -13,6 +13,7 @@
 require_once 'User.php';
 require_once 'Movie.php';
 require_once 'Session.php';
+require_once 'BackupManager.php';
 
 // Start the session
 session_start([
@@ -148,6 +149,19 @@ if (isset($_SESSION['loggedInUser'])) {
                 echo '</form>';
                 echo '</div>';
                 echo '<hr>';
+            }
+
+            echo '<form action="moviesSessionsManaging.php" method="post">';
+            echo '<input type="submit" name="backup" value="Backup Database">';
+            echo '<input type="submit" name="restore" value="Restore Database">';
+            echo '</form>';
+            
+            // Handle form submission
+            if (isset($_POST['backup'])) {
+                BackupManager::backupDatabase(); // Trigger the backup process
+            } elseif (isset($_POST['restore'])) {
+                // Trigger the restore process
+                BackupManager::restoreLatestBackup();
             }
 
         } catch (PDOException $e) {
