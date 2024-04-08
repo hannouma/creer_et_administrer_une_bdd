@@ -259,6 +259,8 @@ GRANT SELECT, INSERT ON cinemaBDD.session_movies TO 'user.php'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON cinemaBDD.bookings TO 'user.php'@'localhost';
 GRANT SELECT ON cinemaBDD.paymentTypes TO 'user.php'@'localhost';
 GRANT INSERT, SELECT ON cinemaBDD.payments TO 'user.php'@'localhost';
+--For the user.php to be able to run the mysqldump
+GRANT SELECT, LOCK TABLES, SHOW VIEW ON cinemabdd.* TO 'user.php'@'localhost';
 
 
 
