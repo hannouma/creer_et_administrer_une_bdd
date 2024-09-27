@@ -1,6 +1,6 @@
 <!-- click_tracker.php -->
 <?php
-require 'vendor/autoload.php'; // This line is included to load MongoDB
+require '../vendor/autoload.php'; // This line is included to load MongoDB
 
 // Connect to MongoDB
 $client = new MongoDB\Client("mongodb://127.0.0.1:27017");

@@ -1,6 +1,6 @@
 <?php
-require_once 'Movie.php';
-require_once 'User.php';
+require_once '../src/Movie.php';
+require_once '../src/User.php';
 $allowedFiles = array(
     'User.php',
     'Movie.php'

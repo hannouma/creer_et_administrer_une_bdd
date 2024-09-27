@@ -10,10 +10,10 @@
 <body>
 
 <?php
-require_once 'Session.php';
-require_once 'Movie.php';
-require_once 'User.php';
-require_once 'BackupManager.php';
+require_once '../src/Session.php';
+require_once '../src/Movie.php';
+require_once '../src/User.php';
+require_once '../src/BackupManager.php';
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

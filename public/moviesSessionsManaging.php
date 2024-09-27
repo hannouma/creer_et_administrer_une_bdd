@@ -10,11 +10,11 @@
 <body>
 
 <?php
-require_once 'User.php';
-require_once 'Movie.php';
-require_once 'Session.php';
-require_once 'BackupManager.php';
-require_once 'click_tracker.php';
+require_once '../src/User.php';
+require_once '../src/Movie.php';
+require_once '../src/Session.php';
+require_once '../src/BackupManager.php';
+require_once './click_tracker.php';
 
 // Start the session
 session_start([
@@ -33,8 +33,8 @@ if (isset($_SESSION['loggedInUser'])) {
 
     // Check if the user has ROLE_ADMIN or COMPLEX_USER role
     if (in_array('ROLE_ADMIN', $roles)) {
-        // Include your database connection details
-        $dsn = 'mysql:host=localhost;dbname=cinemaBDD';
+        // Include my database connection details
+        $dsn = 'mysql:host=localhost;dbname=cinemabdd';
         $username = 'user.php';
         $password = 'Cinem@d4t4B@$e';
 
@@ -62,7 +62,7 @@ if (isset($_SESSION['loggedInUser'])) {
             }
 
             // Display the total click counts in a table
-            echo '<h2>Total Click Counts for Movies</h2>';
+            echo '<h2><mark>Total Click Counts for Movies</mark></h2>';
             echo '<table border="1">';
             echo '<tr><th>Movie Title</th><th>Total Click Count</th></tr>';
 
@@ -84,7 +84,7 @@ if (isset($_SESSION['loggedInUser'])) {
                 $cinemaId = $cinema->getCinemaID();
 
                 echo '<div>';
-                echo '<h2 style="color: red; text-decoration: underline;">' . htmlspecialchars($cinema->getName()) . '</h2>';
+                echo '<h2>' . '<mark>' . htmlspecialchars($cinema->getName()) . '</mark>' . '</h2>';
                 echo '<p>' . 'Location: ' . htmlspecialchars($cinema->getLocation()) . '</p>';
 
                 // Fetch movies for the current cinema
@@ -94,7 +94,7 @@ if (isset($_SESSION['loggedInUser'])) {
                 foreach ($movies as $movie) {
 
                     echo '<div>';
-                    echo '<h3 style="color: blue;">' . htmlspecialchars($movie->getMovieTitle()) . '</h3>';
+                    echo '<h3><ins>' . htmlspecialchars($movie->getMovieTitle()) . '</ins></h3>';
                     echo '<p><strong>Description:</strong> ' . htmlspecialchars($movie->getMovieDescription()) . '</p>';
                     echo '<p><strong>Duration:</strong> ' . htmlspecialchars($movie->getMovieDuration()) . ' min</p>';
                     echo '<p><strong>Genre:</strong> ' . htmlspecialchars($movie->getMovieGenre()) . '</p>';

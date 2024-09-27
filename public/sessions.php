@@ -1,7 +1,7 @@
 <!-- sessions.php -->
 <?php
-require_once 'User.php';
-require_once 'click_tracker.php';
+require_once '../src/User.php';
+require_once './click_tracker.php';
 
 session_start([
     'cookie_lifetime' => 86400, // 24 hours session lifetime

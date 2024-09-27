@@ -1,5 +1,5 @@
 <?php
-require_once 'BackupManager.php';
+require_once '../src/BackupManager.php';
 
 $dsn = 'mysql:host=localhost;dbname=cinemaBDD';
 $username = 'user.php';

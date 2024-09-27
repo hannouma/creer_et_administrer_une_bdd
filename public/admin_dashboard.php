@@ -1,7 +1,7 @@
 <?php
-require_once 'User.php';
-require_once 'Movie.php';
-require_once 'Session.php';
+require_once '../src/User.php';
+require_once '../src/Movie.php';
+require_once '../src/Session.php';
 
 // Start the session with secure settings
 session_start([

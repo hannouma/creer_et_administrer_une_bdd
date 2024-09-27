@@ -1,1 +1,0 @@
-mysqldump: Got error: 1044: "Access denied for user 'user.php'@'localhost' to database 'cinemabdd'" when using LOCK TABLES

@@ -1,6 +1,6 @@
 <?php
-require_once 'User.php';
-require_once 'Session.php';
+require_once '../src/User.php';
+require_once '../src/Session.php';
 
 // Start the session
 session_start([
@@ -10,7 +10,7 @@ session_start([
     'use_strict_mode' => true   // Regenerates session ID on every request
 ]);
 
-$dsn = 'mysql:host=localhost;dbname=cinemaBDD';
+$dsn = 'mysql:host=localhost;dbname=cinemabdd';
 $username = 'user.php';
 $password = 'Cinem@d4t4B@$e';
 

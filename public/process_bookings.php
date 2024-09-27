@@ -1,7 +1,7 @@
 <?php
-require_once 'Booking.php';
-require_once 'User.php';
-require_once 'BackupManager.php';
+require_once '../src/Booking.php';
+require_once '../src/User.php';
+require_once '../src/BackupManager.php';
 
 // Start the session
 session_start([

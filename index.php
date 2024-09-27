@@ -1,6 +1,6 @@
 <!-- index.php -->
 <?php
-require_once 'User.php';
+require_once './src/User.php';
 
 session_start([
     'cookie_lifetime' => 86400, // 24 hours session lifetime
@@ -9,7 +9,7 @@ session_start([
     'use_strict_mode' => true   // Regenerates session ID on every request
 ]);
 
-$dsn = 'mysql:host=localhost;dbname=cinemaBDD';
+$dsn = 'mysql:host=localhost;dbname=cinemabdd';
 $username = 'user.php';
 $password = 'Cinem@d4t4B@$e';
 
@@ -42,7 +42,7 @@ try {
         <ul>
             <?php foreach ($cinemas as $cinema) : ?>
                 <li>
-                    <a href="movies.php?cinema_id=<?php echo htmlspecialchars($cinema['cinema_id']); ?>">
+                    <a href="public/movies.php?cinema_id=<?php echo htmlspecialchars($cinema['cinema_id']); ?>">
                         <?php echo htmlspecialchars($cinema['name']); ?> - <?php echo htmlspecialchars($cinema['location']); ?>
                     </a>
                 </li>
