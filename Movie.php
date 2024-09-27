@@ -89,7 +89,7 @@ class Movie {
         $movies = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $movie = new Movie($row['movie_id'], $row['movie_title'], $row['movie_description'], $row['movie_duration'], $row['movie_genre'], $row['cinema_id']);
+            $movie = new Movie($row['movie_id'], $row['movie_title'], $row['movie_description'], $row['movie_duration'], $row['movie_genre']);
             $movies[] = $movie;
         }
 

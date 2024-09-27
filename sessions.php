@@ -1,6 +1,7 @@
 <!-- sessions.php -->
 <?php
 require_once 'User.php';
+require_once 'click_tracker.php';
 
 session_start([
     'cookie_lifetime' => 86400, // 24 hours session lifetime
@@ -21,6 +22,11 @@ try {
         // Sanitize input parameters to prevent SQL injection
         $cinemaId = htmlspecialchars($_GET['cinema_id'], ENT_QUOTES, 'UTF-8');
         $movieId = htmlspecialchars($_GET['movie_id'], ENT_QUOTES, 'UTF-8');
+
+        // Track clicks if the 'track_click' parameter is present
+        if (isset($_GET['track_click']) && $_GET['track_click'] === 'true') {
+            incrementClicks($movieId); // Increment the click count for the movie
+        }
 
         $sessionsQuery =  "SELECT s.*, h.hall_name
         FROM sessions s

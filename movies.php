@@ -1,6 +1,7 @@
 <!-- movies.php -->
 <?php
 require_once 'User.php';
+require_once 'click_tracker.php';
 
 session_start([
     'cookie_lifetime' => 86400, // 24 hours session lifetime
@@ -31,7 +32,6 @@ try {
             echo "Invalid cinema ID";
         }
 
-        
         // Use a JOIN to retrieve movies based on movie_cinema_relationship
         $moviesQuery = "SELECT movies.* FROM movies
                         JOIN movie_cinema_relationship ON movies.movie_id = movie_cinema_relationship.movie_id
@@ -68,7 +68,7 @@ try {
             <?php foreach ($movies as $movie) : ?>
                 <li>
                     <strong>
-                        <a href="sessions.php?cinema_id=<?php echo htmlspecialchars($cinemaId); ?>&movie_id=<?php echo htmlspecialchars($movie['movie_id']); ?>">
+                        <a href="sessions.php?cinema_id=<?php echo htmlspecialchars($cinemaId); ?>&movie_id=<?php echo htmlspecialchars($movie['movie_id']); ?>&track_click=true">
                             <?php echo htmlspecialchars($movie['movie_title']); ?>
                         </a>
                     </strong> - <?php echo htmlspecialchars($movie['movie_genre']); ?><br>

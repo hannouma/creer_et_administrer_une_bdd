@@ -14,6 +14,7 @@ require_once 'User.php';
 require_once 'Movie.php';
 require_once 'Session.php';
 require_once 'BackupManager.php';
+require_once 'click_tracker.php';
 
 // Start the session
 session_start([
@@ -40,6 +41,39 @@ if (isset($_SESSION['loggedInUser'])) {
         try {
             $pdo = new PDO($dsn, $username, $password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // Fetch movies and accumulate click counts
+            $movies = Movie::getAllMovies($pdo); // This method fetches all movies
+            $clickCounts = []; // Array to store unique click counts
+            
+            foreach ($movies as $movie) {
+                $clickCount = getClickCount($movie->getMovieID());
+
+                // Accumulate the click counts for each movie
+                if (isset($totalClickCounts[$movie->getMovieID()])) {
+                    $totalClickCounts[$movie->getMovieID()]['title'] = $movie->getMovieTitle();
+                    $totalClickCounts[$movie->getMovieID()]['count'] += $clickCount;
+                } else {
+                    $totalClickCounts[$movie->getMovieID()] = [
+                        'title' => $movie->getMovieTitle(),
+                        'count' => $clickCount
+                    ];
+                }
+            }
+
+            // Display the total click counts in a table
+            echo '<h2>Total Click Counts for Movies</h2>';
+            echo '<table border="1">';
+            echo '<tr><th>Movie Title</th><th>Total Click Count</th></tr>';
+
+            foreach ($totalClickCounts as $movieId => $data) {
+                echo '<tr>';
+                echo '<td>' . htmlspecialchars($data['title']) . '</td>';
+                echo '<td>' . htmlspecialchars($data['count']) . '</td>';
+                echo '</tr>';
+            }
+
+            echo '</table>';
 
             // Fetch cinemas from the database
             $cinemas = Cinema::getCinemas($pdo);
