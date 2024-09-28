@@ -1,6 +1,12 @@
 <?php
 require_once '../src/Movie.php';
 require_once '../src/User.php';
+require_once '../vendor/autoload.php';
+
+// Load environment variables from the .env file
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
 $allowedFiles = array(
     'User.php',
     'Movie.php'
@@ -9,9 +15,10 @@ $allowedFiles = array(
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search_movie'])) {
 
-    $dsn = 'mysql:host=localhost;dbname=cinemaBDD';
-    $username = 'user.php';
-    $password = 'Cinem@d4t4B@$e';
+    // Use environment variables for MySQL
+    $dsn = $_ENV['DB_DSN'];
+    $username = $_ENV['DB_USERNAME'];
+    $password = $_ENV['DB_PASSWORD'];
 
     try {
         $pdo = new PDO($dsn, $username, $password);

@@ -2,6 +2,11 @@
 require_once '../src/Booking.php';
 require_once '../src/User.php';
 require_once '../src/BackupManager.php';
+require_once '../vendor/autoload.php';
+
+// Load environment variables from the .env file
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 
 // Start the session
 session_start([
@@ -11,9 +16,10 @@ session_start([
     'use_strict_mode' => true   // Regenerates session ID on every request
 ]);
 
-$dsn = 'mysql:host=localhost;dbname=cinemaBDD';
-$username = 'user.php';
-$password = 'Cinem@d4t4B@$e';
+// Use environment variables for MySQL
+$dsn = $_ENV['DB_DSN'];
+$username = $_ENV['DB_USERNAME'];
+$password = $_ENV['DB_PASSWORD'];
 
 // Validate form submission and input data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

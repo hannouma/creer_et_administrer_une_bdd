@@ -1,6 +1,10 @@
-<!-- index.php -->
 <?php
 require_once './src/User.php';
+require_once './vendor/autoload.php';
+
+// Load environment variables from the .env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 session_start([
     'cookie_lifetime' => 86400, // 24 hours session lifetime
@@ -9,9 +13,10 @@ session_start([
     'use_strict_mode' => true   // Regenerates session ID on every request
 ]);
 
-$dsn = 'mysql:host=localhost;dbname=cinemabdd';
-$username = 'user.php';
-$password = 'Cinem@d4t4B@$e';
+// Use environment variables for MySQL
+$dsn = $_ENV['DB_DSN'];
+$username = $_ENV['DB_USERNAME'];
+$password = $_ENV['DB_PASSWORD'];
 
 try {
     $pdo = new PDO($dsn, $username, $password);

@@ -2,9 +2,13 @@
 <?php
 require '../vendor/autoload.php'; // This line is included to load MongoDB
 
-// Connect to MongoDB
-$client = new MongoDB\Client("mongodb://127.0.0.1:27017");
-$db = $client->cinema; // Use your actual database name
+// Load environment variables
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
+// Connect to MongoDB using environment variables
+$client = new MongoDB\Client($_ENV['MONGODB_URL']);
+$db = $client->selectDatabase($_ENV['MONGODB_DB']);// database name
 $collection = $db->movie_stats; // Collection for movie statistics
 
 // Increment click count for a specific movie.

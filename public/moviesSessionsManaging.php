@@ -15,6 +15,12 @@ require_once '../src/Movie.php';
 require_once '../src/Session.php';
 require_once '../src/BackupManager.php';
 require_once './click_tracker.php';
+require_once '../vendor/autoload.php';
+
+// Load environment variables from the .env file
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
 
 // Start the session
 session_start([
@@ -34,9 +40,10 @@ if (isset($_SESSION['loggedInUser'])) {
     // Check if the user has ROLE_ADMIN or COMPLEX_USER role
     if (in_array('ROLE_ADMIN', $roles)) {
         // Include my database connection details
-        $dsn = 'mysql:host=localhost;dbname=cinemabdd';
-        $username = 'user.php';
-        $password = 'Cinem@d4t4B@$e';
+        // Use environment variables for MySQL
+        $dsn = $_ENV['DB_DSN'];
+        $username = $_ENV['DB_USERNAME'];
+        $password = $_ENV['DB_PASSWORD'];
 
         try {
             $pdo = new PDO($dsn, $username, $password);
