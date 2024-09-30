@@ -42,8 +42,8 @@ if (isset($_SESSION['loggedInUser'])) {
         // Include my database connection details
         // Use environment variables for MySQL
         $dsn = $_ENV['DB_DSN'];
-        $username = $_ENV['DB_USERNAME'];
-        $password = $_ENV['DB_PASSWORD'];
+        $username = $_ENV['MYSQLUSER'];
+        $password = $_ENV['MYSQLPASSWORD'];
 
         try {
             $pdo = new PDO($dsn, $username, $password);
