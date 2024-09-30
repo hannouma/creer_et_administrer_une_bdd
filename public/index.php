@@ -1,9 +1,9 @@
 <?php
-require_once './src/User.php';
-require_once './vendor/autoload.php';
+require_once '../src/User.php';
+require_once '../vendor/autoload.php';
 
 // Load environment variables from the .env file
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
 session_start([
@@ -47,7 +47,7 @@ try {
         <ul>
             <?php foreach ($cinemas as $cinema) : ?>
                 <li>
-                    <a href="public/movies.php?cinema_id=<?php echo htmlspecialchars($cinema['cinema_id']); ?>">
+                    <a href="movies.php?cinema_id=<?php echo htmlspecialchars($cinema['cinema_id']); ?>">
                         <?php echo htmlspecialchars($cinema['name']); ?> - <?php echo htmlspecialchars($cinema['location']); ?>
                     </a>
                 </li>

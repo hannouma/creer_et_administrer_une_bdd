@@ -211,9 +211,10 @@ if (isset($_SESSION['loggedInUser'])) {
     }  elseif (in_array('COMPLEX_USER', $roles)) {
         // Fetch cinema ID associated with the complex user
         $complexUserId = $loggedInUser->getId();
-        $dsn = 'mysql:host=localhost;dbname=cinemaBDD';
-        $username = 'user.php';
-        $password = 'Cinem@d4t4B@$e';
+        // Use environment variables for MySQL
+        $dsn = $_ENV['DB_DSN'];
+        $username = $_ENV['MYSQLUSER'];
+        $password = $_ENV['MYSQLPASSWORD'];
 
         try {
             $pdo = new PDO($dsn, $username, $password);

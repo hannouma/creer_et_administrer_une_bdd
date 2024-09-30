@@ -1,7 +1,14 @@
 <?php
-$dsn = 'mysql:host=localhost;dbname=cinemabdd';
-$username = 'user.php';
-$password = 'Cinem@d4t4B@$e';
+require_once './vendor/autoload.php';
+
+// Load environment variables from the .env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// Use environment variables for MySQL
+$dsn = $_ENV['DB_DSN'];
+$username = $_ENV['MYSQLUSER'];
+$password = $_ENV['MYSQLPASSWORD'];
 
 try{
     $pdo = new PDO($dsn, $username, $password);
