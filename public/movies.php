@@ -27,16 +27,16 @@ try {
     if (isset($_GET['cinema_id'])) {
         $cinemaId = $_GET['cinema_id'] ?? ''; // Retrieve the cinema_id from $_GET and initialize as empty string if not provided
 
-        // Regular expression pattern for matching UUID format
-        $uuidPattern = '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i';
+        // // Regular expression pattern for matching UUID format
+        // $uuidPattern = '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i';
 
-        // Check if cinema_id matches the UUID pattern
-        if (preg_match($uuidPattern, $cinemaId)) {
-            // Valid UUID, no need for further sanitization
-        } else {
-            // Invalid UUID, handle error or set a default value
-            echo "Invalid cinema ID";
-        }
+        // // Check if cinema_id matches the UUID pattern
+        // if (preg_match($uuidPattern, $cinemaId)) {
+        //     // Valid UUID, no need for further sanitization
+        // } else {
+        //     // Invalid UUID, handle error or set a default value
+        //     echo "Invalid cinema ID";
+        // }
 
         // Use a JOIN to retrieve movies based on movie_cinema_relationship
         $moviesQuery = "SELECT movies.* FROM movies

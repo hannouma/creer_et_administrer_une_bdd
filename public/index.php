@@ -1,11 +1,14 @@
 <?php
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/../logs/php_errors.log');
+
 // Enable error reporting
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once '../src/User.php';
-require_once '../vendor/autoload.php';
+require_once __DIR__ . '/../src/User.php';;
+require_once __DIR__ . '/../vendor/autoload.php';
 
 // Load environment variables from the .env file
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
