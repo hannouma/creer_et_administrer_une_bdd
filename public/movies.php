@@ -1,4 +1,3 @@
-<!-- movies.php -->
 <?php
 require_once '../src/User.php';
 require_once './click_tracker.php';
@@ -27,16 +26,16 @@ try {
     if (isset($_GET['cinema_id'])) {
         $cinemaId = $_GET['cinema_id'] ?? ''; // Retrieve the cinema_id from $_GET and initialize as empty string if not provided
 
-        // // Regular expression pattern for matching UUID format
-        // $uuidPattern = '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i';
+        // Regular expression pattern for matching UUID format
+        $uuidPattern = '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i';
 
-        // // Check if cinema_id matches the UUID pattern
-        // if (preg_match($uuidPattern, $cinemaId)) {
-        //     // Valid UUID, no need for further sanitization
-        // } else {
-        //     // Invalid UUID, handle error or set a default value
-        //     echo "Invalid cinema ID";
-        // }
+        // Check if cinema_id matches the UUID pattern
+        if (preg_match($uuidPattern, $cinemaId)) {
+            // Valid UUID, no need for further sanitization
+        } else {
+            // Invalid UUID, handle error or set a default value
+            echo "Invalid cinema ID";
+        }
 
         // Use a JOIN to retrieve movies based on movie_cinema_relationship
         $moviesQuery = "SELECT movies.* FROM movies
@@ -46,6 +45,12 @@ try {
         $moviesStmt->bindParam(':cinema_id', $cinemaId, PDO::PARAM_STR);
         $moviesStmt->execute();
         $movies = $moviesStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Debugging output
+        echo '<pre>';
+        echo "<strong>Debug: Movies Data</strong>\n";
+        print_r($movies);
+        echo '</pre>';
     } else {
         // Redirect to the index page if cinema_id is not set
         header('Location: index.php');

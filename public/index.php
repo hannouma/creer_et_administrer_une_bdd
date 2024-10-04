@@ -55,7 +55,7 @@ try {
         <ul>
             <?php foreach ($cinemas as $cinema) : ?>
                 <li>
-                    <a href="movies.php?cinema_id=<?php echo htmlspecialchars($cinema['cinema_id']); ?>">
+                    <a href="./public/movies.php?cinema_id=<?php echo htmlspecialchars($cinema['cinema_id']); ?>">
                         <?php echo htmlspecialchars($cinema['name']); ?> - <?php echo htmlspecialchars($cinema['location']); ?>
                     </a>
                 </li>
