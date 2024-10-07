@@ -1,0 +1,49 @@
+name: "Static Analysis"
+
+on:
+  merge_group:
+  pull_request:
+    branches:
+      - "v*.*"
+      - "master"
+      - "feature/*"
+  push:
+    branches:
+      - "v*.*"
+      - "master"
+      - "feature/*"
+  workflow_call:
+    inputs:
+      ref:
+        description: "The git ref to check"
+        type: string
+        required: true
+
+env:
+  PHP_VERSION: "8.2"
+  DRIVER_VERSION: "stable"
+
+jobs:
+  psalm:
+    name: "Psalm"
+    runs-on: "ubuntu-22.04"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.ref || github.ref }}
+
+      - name: "Setup"
+        uses: "./.github/actions/setup"
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          driver-version: ${{ env.DRIVER_VERSION }}
+
+      - name: "Run Psalm"
+        run: "vendor/bin/psalm --show-info=false --stats --output-format=github --threads=$(nproc) --report=psalm.sarif"
+
+      - name: "Upload SARIF report"
+        uses: "github/codeql-action/upload-sarif@v3"
+        with:
+          sarif_file: psalm.sarif
