@@ -1,3 +1,12 @@
+<?php
+require_once '../src/User.php';
+    session_start([
+        'cookie_lifetime' => 86400, // 24 hours session lifetime
+        'cookie_secure'   => true,  // Requires HTTPS
+        'cookie_httponly' => true,  // Prevents client-side scripts from accessing cookies
+        'use_strict_mode' => true   // Regenerates session ID on every request
+    ]);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +19,6 @@
 <body>
 
 <?php
-require_once '../src/User.php';
 require_once '../src/Movie.php';
 require_once '../src/Session.php';
 require_once '../src/BackupManager.php';
@@ -20,15 +28,6 @@ require_once '../vendor/autoload.php';
 // Load environment variables from the .env file
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
-
-
-// Start the session
-session_start([
-    'cookie_lifetime' => 86400, // 24 hours session lifetime
-    'cookie_secure'   => true,  // Requires HTTPS
-    'cookie_httponly' => true,  // Prevents client-side scripts from accessing cookies
-    'use_strict_mode' => true   // Regenerates session ID on every request
-]);
 
 // Check if the user is logged in
 if (isset($_SESSION['loggedInUser'])) {

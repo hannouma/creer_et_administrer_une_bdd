@@ -1,5 +1,10 @@
-<!-- sessions.php -->
 <?php
+    session_start([
+        'cookie_lifetime' => 86400, // 24 hours session lifetime
+        'cookie_secure'   => true,  // Requires HTTPS
+        'cookie_httponly' => true,  // Prevents client-side scripts from accessing cookies
+        'use_strict_mode' => true   // Regenerates session ID on every request
+    ]);
 require_once '../src/User.php';
 require_once './click_tracker.php';
 require_once '../vendor/autoload.php';
@@ -8,12 +13,6 @@ require_once '../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
-session_start([
-    'cookie_lifetime' => 86400, // 24 hours session lifetime
-    'cookie_secure'   => true,  // Requires HTTPS
-    'cookie_httponly' => true,  // Prevents client-side scripts from accessing cookies
-    'use_strict_mode' => true   // Regenerates session ID on every request
-]);
 
 // Use environment variables for MySQL
 $dsn = $_ENV['DB_DSN'];
