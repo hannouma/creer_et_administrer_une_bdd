@@ -1,0 +1,9 @@
+'gzip' n'est pas reconnu en tant que commande interne
+ou externe, un programme ex�cutable ou un fichier de commandes.
+Usage: mysqldump [OPTIONS] database [tables]
+OR     mysqldump [OPTIONS] --databases DB1 [DB2 DB3...]
+OR     mysqldump [OPTIONS] --all-databases
+OR     mysqldump [OPTIONS] --system=[SYSTEMOPTIONS]]
+For more options, use mysqldump --help
+mysqldump: Got error: 2005: "Unknown MySQL server host 'mysql.railway.internal' (11001)" when trying to connect
+mysqldump: Got error: 2002: "Can't connect to MySQL server on 'autorack.proxy.rlwy.net' (10060)" when trying to connect

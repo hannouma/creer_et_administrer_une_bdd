@@ -1,45 +1,71 @@
 <?php
 class BackupManager {
+    private static $backupDir = __DIR__ . '/../backups/';
+
     public static function backupUserData($userData) {
-        $filePath = '../backup.txt';
+        $filePath = self::$backupDir . 'user_data_backup_' . date('Y-m-d_H-i-s') . '.txt';
         $backupContent = serialize(['userData' => $userData]); // Serialize user data
         
         // Append the serialized data to the backup file
-        file_put_contents($filePath, $backupContent, FILE_APPEND);
+        if (file_put_contents($filePath, $backupContent . PHP_EOL, FILE_APPEND) === false) {
+            error_log('Failed to write to backup file: ' . $filePath);
+        }
     }
+
     public static function backupBookingData($bookingData) {
-        $filePath = '../backup.txt';
+        $filePath = self::$backupDir . 'user_data_backup_' . date('Y-m-d_H-i-s') . '.txt';
         $backupContent = serialize(['bookingData' => $bookingData]); // Serialize booking data
         
         // Append the serialized data to the backup file
-        file_put_contents($filePath, $backupContent, FILE_APPEND);
+        if (file_put_contents($filePath, $backupContent . PHP_EOL, FILE_APPEND) === false) {
+            error_log('Failed to write to backup file: ' . $filePath);
+        }
     }
+
     public static function backupSessionData($sessionData) {
-        $filePath = '../backup.txt';
+        $filePath = self::$backupDir . 'user_data_backup_' . date('Y-m-d_H-i-s') . '.txt';
         $backupContent = serialize(['sessionData' => $sessionData]); // Serialize session data
         
         // Append the serialized data to the backup file
-        file_put_contents($filePath, $backupContent, FILE_APPEND);
+        if (file_put_contents($filePath, $backupContent . PHP_EOL, FILE_APPEND) === false) {
+            error_log('Failed to write to backup file: ' . $filePath);
+        }
     }
+
     public static function backupPaymentData($paymentData) {
-        $filePath = '../backup.txt';
+        $filePath = self::$backupDir . 'user_data_backup_' . date('Y-m-d_H-i-s') . '.txt';
         $backupContent = serialize(['paymentData' => $paymentData]); // Serialize payment data
 
         // Append the serialized data to the backup file
-        file_put_contents($filePath, $backupContent, FILE_APPEND);
+        if (file_put_contents($filePath, $backupContent . PHP_EOL, FILE_APPEND) === false) {
+            error_log('Failed to write to backup file: ' . $filePath);
+        }
     }
+
     public static function backupDatabase() {
-        $backupDir = '../backups/';
-        $backupFile = $backupDir . 'backup_' . date('Y-m-d_H-i-s') . '.sql';
-        $errorLogFile = $backupDir . '../backups/backup_error.log'; // Path to error log file
+        // Load environment variables
+        $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+        $dotenv->load();
+
+        $backupFile = self::$backupDir . 'backup_' . date('Y-m-d_H-i-s') . '.sql.gz';
+        $errorLogFile = self::$backupDir . '../backups/backup_error.log'; // Path to error log file
         
         // Create the backup directory if it doesn't exist
-        if (!file_exists($backupDir)) {
-            mkdir($backupDir, 0777, true);
+        if (!file_exists(self::$backupDir)) {
+            mkdir(self::$backupDir, 0777, true);
         }
         
         // Execute mysqldump command to create a backup
-        $command = 'mysqldump -h localhost -u user.php -pCinem@d4t4B@$e cinemaBDD > ' . $backupFile . ' 2> ' . $errorLogFile;
+        $command = sprintf(
+            'mysqldump --single-transaction --quick --lock-tables=false -h %s -P %s -u %s -p%s %s > %s 2>> %s',
+            $_ENV['MYSQLHOST'],
+            $_ENV['MYSQLPORT'],
+            $_ENV['MYSQLUSER'],
+            $_ENV['MYSQLPASSWORD'],
+            $_ENV['MYSQLDATABASE'],
+            $backupFile,
+            $errorLogFile
+        );
         exec($command, $output, $returnVar);
         
         // Check if the backup was successful
@@ -49,11 +75,10 @@ class BackupManager {
             echo 'Backup failed: ';
         }
     }
+
     public static function restoreLatestBackup() {
-        $backupDir = '../backups/';
-        
         // Get the list of backup files
-        $backupFiles = glob($backupDir . '*.sql');
+        $backupFiles = glob(self::$backupDir . '*.sql.gz');
         
         // Check if any backup files exist
         if (empty($backupFiles)) {
@@ -68,7 +93,15 @@ class BackupManager {
         $latestBackupFile = $backupFiles[0];
         
         // Execute mysql command to restore the database
-        $command = 'mysql -h localhost -u user.php -pCinem@d4t4B@$e cinemaBDD < ' . $latestBackupFile;
+        $command = sprintf(
+            'mysql -h %s -P %s -u %s -p%s %s < %s 2>> %s',
+            $latestBackupFile,
+            $_ENV['MYSQLHOST'],
+            $_ENV['MYSQLPORT'],
+            $_ENV['MYSQLUSER'],
+            $_ENV['MYSQLPASSWORD'],
+            $_ENV['MYSQLDATABASE']
+        );
         exec($command, $output, $returnVar);
         
         // Check if the restore was successful
